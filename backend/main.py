@@ -21,16 +21,26 @@ load_dotenv(
 app = FastAPI(title="PhytoVision AI API", version="3.0.0")
 
 app.add_middleware(
+    
+app = FastAPI(title="PhytoVision AI API", version="3.0.0")
+
+allowed_origins = [
+    origin.strip().rstrip("/")
+    for origin in os.getenv(
+        "CORS_ORIGINS",
+        "https://phytovisionaiweb.netlify.app,http://localhost:5500"
+    ).split(",")
+    if origin.strip()
+]
+
+app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        origin.strip()
-        for origin in os.getenv("CORS_ORIGINS", "http://localhost:5500").split(",")
-        if origin.strip()
-    ],
+    allow_origins=allowed_origins,
     allow_credentials=False,
-    allow_methods=["GET", "POST"],
+    allow_methods=["GET", "POST", "OPTIONS"],
     allow_headers=["*"],
 )
+
 
 MAX_IMAGE_BYTES = 5 * 1024 * 1024
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
