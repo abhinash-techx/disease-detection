@@ -2,7 +2,7 @@
 /* PhytoVision AI frontend — separated from the original single-file page. */
 'use strict';
 
-const API_BASE = 'http://127.0.0.1:8000';
+const API_BASE = 'https://disease-detection-z5y9.onrender.com';
 const MAX_BYTES = 5 * 1024 * 1024;
 const DISEASE_SAMPLES = [
   {key:'healthy', label:'Healthy Leaf'},
