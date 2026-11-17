@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PhytoVision AI — Plant Disease Identification &amp; Treatment</title>
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">🌿 PhytoVision <b>AI</b></div>
+  <div class="tagline">AI-Powered Plant Disease Identification and Treatment — MobileNetV4 · ONNX Runtime · FastAPI · Streamlit</div>
+  <div class="user">👤 Welcome, User</div>
+</header>
+
+<div class="layout">
+  <nav class="sidebar">
+    <button class="nav-btn active" data-view="home">🏠 Home</button>
+    <button class="nav-btn" data-view="detect">🔬 Disease Detection</button>
+    <button class="nav-btn" data-view="history">🕘 History</button>
+    <button class="nav-btn" data-view="about">ℹ️ About</button>
+    <hr style="width:100%;border-color:#eee;">
+    <button class="nav-btn zip-btn" id="zipBtn1">⬇️ Download Full Project (ZIP)</button>
+  </nav>
+
+  <main class="content">
+
+    <!-- HOME VIEW -->
+    <section id="view-home" class="view active">
+      <div class="card">
+        <h2>Upload Plant Image</h2>
+        <div class="grid-2">
+          <div>
+            <div class="dropzone" id="dropzone">
+              <div class="dz-icon">⬆️</div>
+              <p>Drag and drop a plant leaf image here<br>or</p>
+              <label class="btn-primary file-label">📷 Choose Image
+                <input type="file" id="fileInput" accept="image/*" hidden>
+              </label>
+              <p class="muted">Supported formats: JPG, PNG, JPEG &nbsp;|&nbsp; Max size: 5MB</p>
+            </div>
+            <div class="preview-wrap" id="previewWrap" style="display:none;">
+              <img id="previewImg" alt="preview">
+            </div>
+            <button class="btn-primary big" id="predictBtn" disabled>🔍 Predict Disease</button>
+          </div>
+          <div class="howitworks">
+            <h3>⚙️ How It Works?</h3>
+            <ol>
+              <li>Upload a plant leaf image</li>
+              <li>AI model analyzes the image</li>
+              <li>Get disease prediction &amp; severity</li>
+              <li>Receive treatment suggestions</li>
+              <li>Download PDF report</li>
+            </ol>
+          </div>
+        </div>
+        <h3>🖼️ Example Images <span class="muted">— click a sample to try</span></h3>
+        <div class="sample-grid" id="sampleGrid"></div>
+      </div>
+    </section>
+
+    <!-- RESULT VIEW -->
+    <section id="view-result" class="view">
+      <div class="card">
+        <div class="result-header">
+          <h2>Prediction Result</h2>
+          <button class="btn-primary" id="tryAnotherBtn">+ Try Another Image</button>
+        </div>
+        <div class="grid-3">
+          <div class="panel">
+            <h4>🖼️ Uploaded Image</h4>
+            <img id="resultImg" class="result-img" alt="leaf">
+          </div>
+          <div class="panel">
+            <h4>🦠 Disease Identification</h4>
+            <div id="diseaseBadge" class="badge-danger">⚠️ Disease Detected</div>
+            <p><b>Disease:</b> <span id="diseaseName">-</span></p>
+            <p class="sci">Scientific Name: <i id="sciName">-</i></p>
+            <p><b>Confidence:</b> <span id="confidence">-</span></p>
+            <p class="muted small" id="descText"></p>
+          </div>
+          <div class="panel center">
+            <h4>📊 Severity Estimation</h4>
+            <canvas id="gaugeCanvas" width="180" height="180"></canvas>
+            <div><span class="severity-pill low" id="severityLabel">Low Severity</span></div>
+            <p class="muted small" id="severityNote"></p>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="panel">
+            <h4>💊 Treatment Suggestions</h4>
+            <ul id="treatmentList"></ul>
+          </div>
+          <div class="panel">
+            <h4>ℹ️ Additional Information</h4>
+            <table class="info-table" id="infoTable"></table>
+          </div>
+        </div>
+        <div class="grid-2">
+          <div class="panel">
+            <h4>📄 Download Report</h4>
+            <select id="langSelect">
+              <option value="en">English</option>
+              <option value="hi">हिन्दी</option>
+            </select>
+            <button class="btn-danger" id="pdfBtn">📄 Download PDF Report</button>
+          </div>
+          <div class="panel">
+            <h4>🌿 Similar Images (Examples)</h4>
+            <div class="sample-grid small" id="similarGrid"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HISTORY VIEW -->
+    <section id="view-history" class="view">
+      <div class="card">
+        <h2>Prediction History</h2>
+        <table class="info-table full" id="historyTable"></table>
+        <p class="muted" id="noHistory">No predictions yet. Go to Disease Detection to analyze a plant image.</p>
+      </div>
+    </section>
+
+    <!-- ABOUT VIEW -->
+    <section id="view-about" class="view">
+      <div class="card">
+        <h2>About PhytoVision AI</h2>
+        <p><b>PhytoVision AI: Enterprise Agitech Diagnostic &amp; Severity Engine</b> is an AI / Deep Learning based
+        platform developed for the mini project <i>"AI-Deep Learning Based Plant Disease Identification and
+        Treatment Using MobileNetV4."</i></p>
+        <p>The system uses Computer Vision and an optimized ONNX Runtime inference pipeline to analyze plant leaf
+        images, identify potential diseases, estimate infection severity, and generate automated multilingual PDF
+        diagnostic reports.</p>
+        <p><i>This in-browser demo uses a client-side HSV color/lesion-analysis classifier (the classical computer-vision
+        approach described in the report's Literature Review) to simulate the MobileNetV4/ONNX pipeline without
+        requiring a server. The downloadable ZIP contains the full production-style FastAPI + Streamlit + ONNX Runtime
+        + Docker implementation described in the report.</i></p>
+        <h3>🧰 Tech Stack</h3>
+        <div class="badges">
+          <span class="pill-badge">MobileNetV4</span><span class="pill-badge">ONNX Runtime</span>
+          <span class="pill-badge">FastAPI</span><span class="pill-badge">Streamlit</span>
+          <span class="pill-badge">Docker</span><span class="pill-badge">Docker Compose</span>
+          <span class="pill-badge">Computer Vision</span><span class="pill-badge">PDF Reporting</span>
+        </div>
+        <h3>👨‍💻 Team</h3>
+        <p>Sumit Kumar Jha (2402151530047) · Tanuj Chauhan (2402151530049) · Tushar Chauhan (2402151530050)</p>
+        <p>Guide: Mrs. Deepti Srivastava — Department of CSE (AI &amp; ML), Sanskar College of Engineering and
+        Technology, Ghaziabad</p>
+        <button class="btn-primary" id="zipBtn2">⬇️ Download Full Project Source (ZIP)</button>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer class="note">PhytoVision AI — Preliminary diagnostic assistance only. Does not replace professional agricultural expertise.</footer>
+<script src="js/app.js" defer></script>
+</body>
+</html>
