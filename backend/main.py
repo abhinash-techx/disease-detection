@@ -18,10 +18,7 @@ load_dotenv(
     override=True
 )
 
-app = FastAPI(title="PhytoVision AI API", version="3.0.0")
 
-app.add_middleware(
-    
 app = FastAPI(title="PhytoVision AI API", version="3.0.0")
 
 allowed_origins = [
@@ -41,13 +38,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
 MAX_IMAGE_BYTES = 5 * 1024 * 1024
 GROQ_API_KEY = os.getenv("GROQ_API_KEY", "").strip()
 ALLOWED_MIME = {"image/jpeg", "image/png", "image/webp"}
 
 GROQ_MODEL = os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b")
 GROQ_URL = "https://api.groq.com/openai/v1/chat/completions"
+
 
 
 @app.get("/health")
